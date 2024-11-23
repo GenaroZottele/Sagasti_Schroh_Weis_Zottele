@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
 
 class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
+  final VoidCallback onThemeChanged;
+
+  const ProfileScreen({super.key, required this.onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -11,16 +13,16 @@ class ProfileScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('ProfileScreen'),
+        title: const Text('Profile Screen'),
         elevation: 10,
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             HeaderProfile(size: size),
-            const Padding(
-              padding: EdgeInsets.all(15.0),
-              child: BodyProfile(),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: BodyProfile(onThemeChanged: onThemeChanged),
             ),
           ],
         ),
@@ -30,11 +32,9 @@ class ProfileScreen extends StatelessWidget {
 }
 
 class BodyProfile extends StatelessWidget {
-  final bool darkMode = false;
+  final VoidCallback onThemeChanged;
 
-  const BodyProfile({
-    super.key,
-  });
+  const BodyProfile({super.key, required this.onThemeChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -45,11 +45,10 @@ class BodyProfile extends StatelessWidget {
           value: Preferences.darkmode,
           onChanged: (bool value) {
             Preferences.darkmode = value;
+            onThemeChanged();
           },
         ),
-        const SizedBox(
-          height: 15,
-        ),
+        const SizedBox(height: 15),
       ],
     );
   }
@@ -72,9 +71,10 @@ class HeaderProfile extends StatelessWidget {
       child: Center(
         child: CircleAvatar(
           radius: 100,
-          child: Image.asset('assets/images/avatar.png'),
+          backgroundImage: const AssetImage('assets/images/avatar.png'),
         ),
       ),
     );
   }
 }
+
