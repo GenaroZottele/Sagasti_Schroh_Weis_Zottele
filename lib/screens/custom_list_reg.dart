@@ -25,7 +25,7 @@ class custom_list_reg extends StatelessWidget {
             subtitle: Text(registro['descripcion']!),
             onTap: () => Navigator.pushNamed(
               context,
-              '/details',
+              'details',
               arguments: registro,
             ),
           );

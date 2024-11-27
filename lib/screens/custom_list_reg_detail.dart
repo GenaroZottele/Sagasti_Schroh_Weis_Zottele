@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class custom_list_reg_detail extends StatelessWidget {
-    const custom_list_reg_detail({
+    custom_list_reg_detail({
     super.key,
     });
 
