@@ -9,15 +9,15 @@ class ActorDetailScreen extends StatefulWidget {
 
 class _ActorDetailScreenState extends State<ActorDetailScreen> {
   late Map<String, dynamic> actor;
-  late TextEditingController descriptionController;
-  late bool isFavorite; // Estado temporal del switch
+  late TextEditingController descriptionController; 
+  late bool isFavorite; 
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void didChangeDependencies() {  //Metodo para poder editar la informacion de un actor
+    super.didChangeDependencies();  
     actor = ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
     descriptionController = TextEditingController(text: actor['description']);
-    isFavorite = actor['isFavorite']; // Inicializamos con el estado actual del actor
+    isFavorite = actor['isFavorite']; 
   }
 
   @override
@@ -48,10 +48,10 @@ class _ActorDetailScreenState extends State<ActorDetailScreen> {
             const SizedBox(height: 16),
             SwitchListTile(
               title: const Text('Favorito'),
-              value: isFavorite, // Usamos la variable local
+              value: isFavorite,  
               onChanged: (value) {
                 setState(() {
-                  isFavorite = value; // Cambiamos el valor temporal
+                  isFavorite = value; 
                 });
               },
             ),
@@ -60,12 +60,12 @@ class _ActorDetailScreenState extends State<ActorDetailScreen> {
               onPressed: () {
                 setState(() {
                   actor['description'] = descriptionController.text;
-                  actor['isFavorite'] = isFavorite; // Actualizamos el actor solo al guardar
+                  actor['isFavorite'] = isFavorite; 
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Cambios guardados')),
                 );
-                Navigator.pop(context, actor); // Devuelve el actor actualizado
+                Navigator.pop(context, actor); 
               },
               child: const Text('Guardar'),
             ),

@@ -49,11 +49,11 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/loading.gif
-    - assets/images/
-    - assets/posters_estrenos/    
+    - assets/images/  #Zottele
+    - assets/posters_estrenos/   #Weis
     - assets/background.jpg
-    - assets/actores/
-    - assets/movies/
+    - assets/actores/  #Sagasti
+    - assets/movies/  #Schroh
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

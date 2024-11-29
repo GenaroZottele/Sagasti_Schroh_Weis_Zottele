@@ -7,10 +7,8 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Obtiene los argumentos pasados
     final args =
         ModalRoute.of(context)!.settings.arguments as Map<String, dynamic>;
-    // Accede a cada argumento con su clave
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -25,7 +23,7 @@ class MovieDetailsScreen extends StatelessWidget {
             letterSpacing: 1.2,
           ),
         ),
-        backgroundColor: const Color(0xFF2D2F3B), // Fondo gris oscuro
+        backgroundColor: const Color(0xFF2D2F3B), 
         elevation: 5.0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(bottom: Radius.circular(20)),
@@ -34,7 +32,7 @@ class MovieDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
-              horizontal: 25.0), // Márgenes laterales más amplios
+              horizontal: 25.0), 
           child: Column(
             children: [
               HeaderMovieDetails(
@@ -42,7 +40,7 @@ class MovieDetailsScreen extends StatelessWidget {
                 movieImage: args['avatar'],
               ),
               const SizedBox(
-                  height: 30), // Mayor espacio entre el encabezado y el cuerpo
+                  height: 30), 
               BodyMovieDetails(args: args),
             ],
           ),
@@ -60,7 +58,7 @@ class BodyMovieDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start, // Alineación más estética
+      crossAxisAlignment: CrossAxisAlignment.start, 
       children: [
         const SizedBox(height: 15),
         _buildTextField('Título de la película', args['name']),
@@ -77,9 +75,9 @@ class BodyMovieDetails extends StatelessWidget {
     return TextFormField(
       initialValue: initialValue,
       style: const TextStyle(
-        fontSize: 22, // Título y texto más grande
+        fontSize: 22, 
         fontWeight: FontWeight.bold,
-        color: Colors.white, // Texto blanco para mejor contraste
+        color: Colors.white, 
       ),
       decoration: decorationInput(label: label),
       readOnly: true,
@@ -100,15 +98,15 @@ class BodyMovieDetails extends StatelessWidget {
       labelStyle: const TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
-        color: Colors.blueAccent, // Color azul para las etiquetas
+        color: Colors.blueAccent, 
       ),
       prefixIcon: (icon != null) ? Icon(icon, color: Colors.blueAccent) : null,
       contentPadding:
           const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
       filled: true,
-      fillColor: const Color(0xFF4A4A4A), // Fondo más oscuro para los campos
+      fillColor: const Color(0xFF4A4A4A), 
       border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(8), // Bordes rectangulares
+        borderRadius: BorderRadius.circular(8),
         borderSide: BorderSide.none,
       ),
       focusedBorder: OutlineInputBorder(
@@ -133,42 +131,42 @@ class HeaderMovieDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: size.height * 0.35, // Ajustamos la altura de la imagen
+      height: size.height * 0.35, 
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: [
             Color(0xFF212121),
             Color(0xFF37474F)
-          ], // Degradado de gris oscuro a azul grisáceo
+          ], 
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
         borderRadius: const BorderRadius.only(
           bottomLeft:
-              Radius.circular(25), // Bordes redondeados en la parte inferior
+              Radius.circular(25), 
           bottomRight: Radius.circular(25),
         ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.7),
             offset: Offset(0, 10),
-            blurRadius: 30, // Sombra más suave
+            blurRadius: 30, 
           ),
         ],
       ),
       child: Center(
         child: Container(
-          width: size.width * 0.45, // Ajustamos el ancho de la imagen
-          height: size.height * 0.25, // Ajustamos la altura de la imagen
+          width: size.width * 0.45, 
+          height: size.height * 0.25, 
           decoration: BoxDecoration(
-            shape: BoxShape.circle, // Imagen circular
+            shape: BoxShape.circle, 
             image: DecorationImage(
               image: AssetImage(
                 movieImage != null
                     ? 'assets/movies/$movieImage.jpg'
                     : 'assets/loading.gif',
               ),
-              fit: BoxFit.contain, // Cambiado de 'cover' a 'contain'
+              fit: BoxFit.contain, 
             ),
           ),
         ),

@@ -24,7 +24,7 @@ class _EstrenosListItemState extends State<EstrenosListItem> {
   }
 
 void saveChanges(BuildContext context) {
-  Navigator.pop(context, isFavorite); // Devolver el nuevo estado al guardar
+  Navigator.pop(context, isFavorite);  
 }
  
 
@@ -40,7 +40,7 @@ void saveChanges(BuildContext context) {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pop(context, null); // No guardar cambios si se presiona atrás
+            Navigator.pop(context, null); 
           },
         ),
       ),

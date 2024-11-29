@@ -74,7 +74,7 @@ class _RecordDetailsScreenState extends State<RecordDetailsScreen> {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                Navigator.pop(context); // Vuelve a la lista
+                Navigator.pop(context);  
               },
               child: const Text('Guardar'),
             ),

@@ -7,7 +7,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context); // Obtiene el tema actual
+    final theme = Theme.of(context); 
     final isDarkMode = theme.brightness == Brightness.dark;
 
     return Scaffold(
@@ -33,7 +33,6 @@ class HomeScreen extends StatelessWidget {
       drawer: DrawerMenu(),
       body: Stack(
         children: [
-          // Imagen de fondo con difuminado
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
@@ -48,7 +47,7 @@ class HomeScreen extends StatelessWidget {
               ),
             ),
           ),
-          // Contenido superpuesto al fondo
+          
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

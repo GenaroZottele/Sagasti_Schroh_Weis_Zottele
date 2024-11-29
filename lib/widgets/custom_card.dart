@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class CustomCard extends StatelessWidget {
   final String title;
   final String subtitle;
-  final String? imageUrl; // Opcional
+  final String? imageUrl;
 
   const CustomCard({
     super.key,

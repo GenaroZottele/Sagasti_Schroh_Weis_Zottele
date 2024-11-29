@@ -1,7 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/mocks/estrenos_mock.dart' show peliculasEstrenos;
-import 'package:flutter_application_base/widgets/movie_card.dart'; // Importar MovieCard
+import 'package:flutter_application_base/widgets/widgets.dart';
 
 class CustomListScreenEstrenos extends StatefulWidget {
   const CustomListScreenEstrenos({super.key});
@@ -35,7 +35,7 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
     setState(() {
       _searchQuery = query ?? '';
       if (_searchQuery.isEmpty) {
-        _auxiliarElements = peliculasEstrenos; // Restablecer al estado original
+        _auxiliarElements = peliculasEstrenos;  
       } else {
         _auxiliarElements = peliculasEstrenos.where((element) {
           return element[1].toLowerCase().contains(_searchQuery.toLowerCase());
@@ -69,7 +69,6 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
 
         return GestureDetector(
           onTap: () async {
-            // Abrir detalle y esperar cambios
             final updatedData = await Navigator.pushNamed(
               context,
               'estrenos_list_item',
@@ -82,11 +81,10 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
               },
             );
 
-            // Verificar si hay cambios y actualizar la lista
+            
             if (updatedData != null) {
               setState(() {
-                // Actualizar solo los campos específicos
-                _auxiliarElements[index][4] = updatedData; // Estado de favorito
+                _auxiliarElements[index][4] = updatedData; 
               });
             }
           },
@@ -98,7 +96,6 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
             isFavorite: movie[4],
             onFavoriteToggle: () {
               setState(() {
-                // Cambiar estado local directamente
                 _auxiliarElements[index][4] = !_auxiliarElements[index][4];
               });
             },

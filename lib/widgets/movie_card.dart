@@ -30,7 +30,6 @@ final String poster;
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagen del póster
             ClipRRect(
               borderRadius: const BorderRadius.vertical(top: Radius.circular(10)),
               child: Image.asset(
@@ -40,7 +39,6 @@ final String poster;
                 fit: BoxFit.cover,
               ),
             ),
-            // Información textual
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(
@@ -58,17 +56,15 @@ final String poster;
                   ),
                   const SizedBox(height: 8),
                 Row(
-  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  children: [
-    // Rating Circle
-    RatingCircle(rating: rating),
-    // Icono de estrella solo visual
-    Icon(
-      isFavorite ? Icons.star : Icons.star_border_outlined,
-      color: isFavorite ? Colors.yellow : Colors.grey,
-    ),
-  ],
-),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    RatingCircle(rating: rating),
+                    Icon(
+                      isFavorite ? Icons.star : Icons.star_border_outlined,
+                      color: isFavorite ? Colors.yellow : Colors.grey,
+                    ),
+                  ],
+                ),
                 ],
               ),
             ),
@@ -85,7 +81,7 @@ class RatingCircle extends StatelessWidget {
   const RatingCircle({Key? key, required this.rating}) : super(key: key);
 
   Color _getRatingColor(double rating) {
-    if (rating < 50) return Colors.red; // Para valores entre 0 y 100
+    if (rating < 50) return Colors.red; 
     if (rating < 75) return Colors.amber;
     return Colors.green;
   }

@@ -22,7 +22,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   void _updateTheme() {
-    setState(() {}); // Refresca la UI al cambiar el tema 
+    setState(() {}); 
   }
 
   @override
@@ -38,11 +38,14 @@ class _MyAppState extends State<MyApp> {
         'estrenos_list_screen': (context) => const CustomListScreenEstrenos(),
         'estrenos_list_item': (context) => const EstrenosListItem(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
+        'actores': (context) => const ActoresListScreen(),
+        'details': (context) => const ActorDetailScreen(),
         'record_list': (context) => const RecordListScreen(),
         'record_details': (context) => const RecordDetailsScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'custom_list_movies_screen': (context) => const CustomListMoviesScreen(),
-        'custom_list_movies_item': (context) => const MovieDetailsScreen(),},
+        'custom_list_movies_item': (context) => const MovieDetailsScreen(),
+        },
     );
   }
 }

@@ -22,7 +22,7 @@ class _RecordListScreenState extends State<RecordListScreen> {
           return GestureDetector(
             onTap: () async {
               await Navigator.pushNamed(context, 'record_details', arguments: record);
-              setState(() {}); // Refresca la lista
+              setState(() {});
             },
             child: Card(
               elevation: 3,
