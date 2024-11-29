@@ -1,17 +1,17 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/mocks/estrenos_mock.dart' show peliculasEstrenos;
-import 'package:flutter_application_base/widgets/movie_card.dart';
+import 'package:flutter_application_base/widgets/movie_card.dart'; // Importar MovieCard
 
-class CustomListScreen extends StatefulWidget {
-  const CustomListScreen({super.key});
+class CustomListScreenEstrenos extends StatefulWidget {
+  const CustomListScreenEstrenos({super.key});
 
   @override
-  State<CustomListScreen> createState() => _CustomListScreenState();
+  State<CustomListScreenEstrenos> createState() => _CustomListScreenState();
 }
 
-class _CustomListScreenState extends State<CustomListScreen> {
-  late List _auxiliarElements;
+class _CustomListScreenState extends State<CustomListScreenEstrenos> {
+  List _auxiliarElements = [];
   String _searchQuery = '';
   bool _searchActive = false;
 
@@ -21,7 +21,7 @@ class _CustomListScreenState extends State<CustomListScreen> {
   @override
   void initState() {
     super.initState();
-    _auxiliarElements = List.from(peliculasEstrenos);
+    _auxiliarElements = peliculasEstrenos;
   }
 
   @override
@@ -35,7 +35,7 @@ class _CustomListScreenState extends State<CustomListScreen> {
     setState(() {
       _searchQuery = query ?? '';
       if (_searchQuery.isEmpty) {
-        _auxiliarElements = List.from(peliculasEstrenos);
+        _auxiliarElements = peliculasEstrenos; // Restablecer al estado original
       } else {
         _auxiliarElements = peliculasEstrenos.where((element) {
           return element[1].toLowerCase().contains(_searchQuery.toLowerCase());
@@ -44,20 +44,10 @@ class _CustomListScreenState extends State<CustomListScreen> {
     });
   }
 
-  void _updateFavorite(String title, bool isFavorite) {
-    setState(() {
-      final index = peliculasEstrenos.indexWhere((movie) => movie[1] == title);
-      if (index != -1) peliculasEstrenos[index][4] = isFavorite;
-
-      // También actualizar la lista auxiliar si corresponde
-      final auxIndex = _auxiliarElements.indexWhere((movie) => movie[1] == title);
-      if (auxIndex != -1) _auxiliarElements[auxIndex][4] = isFavorite;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: true,
       child: Scaffold(
         body: Column(
           children: [
@@ -69,7 +59,7 @@ class _CustomListScreenState extends State<CustomListScreen> {
     );
   }
 
-  Expanded listItemsArea() {
+ Expanded listItemsArea() {
   return Expanded(
     child: ListView.builder(
       physics: const BouncingScrollPhysics(),
@@ -79,22 +69,24 @@ class _CustomListScreenState extends State<CustomListScreen> {
 
         return GestureDetector(
           onTap: () async {
-            final updatedFavorite = await Navigator.pushNamed(
+            // Abrir detalle y esperar cambios
+            final updatedData = await Navigator.pushNamed(
               context,
               'estrenos_list_item',
               arguments: {
                 'poster': movie[0],
                 'title': movie[1],
                 'category': movie[2],
-                'rating': movie[3].toDouble(), // Asegúrate de pasar un double
+                'rating': movie[3], 
                 'favorite': movie[4],
               },
             );
 
-            // Actualizar el estado si cambian favoritos o cualquier otra propiedad
-            if (updatedFavorite != null) {
+            // Verificar si hay cambios y actualizar la lista
+            if (updatedData != null) {
               setState(() {
-                movie[4] = updatedFavorite;
+                // Actualizar solo los campos específicos
+                _auxiliarElements[index][4] = updatedData; // Estado de favorito
               });
             }
           },
@@ -102,12 +94,12 @@ class _CustomListScreenState extends State<CustomListScreen> {
             poster: movie[0],
             title: movie[1],
             category: movie[2],
-            rating: movie[3].toDouble(), // Asegúrate de usar double
+            rating: movie[3], 
             isFavorite: movie[4],
             onFavoriteToggle: () {
-              // Cambiar estado local al presionar el botón de favorito
               setState(() {
-                movie[4] = !movie[4];
+                // Cambiar estado local directamente
+                _auxiliarElements[index][4] = !_auxiliarElements[index][4];
               });
             },
           ),
@@ -118,6 +110,8 @@ class _CustomListScreenState extends State<CustomListScreen> {
 }
   AnimatedSwitcher searchArea() {
     return AnimatedSwitcher(
+      switchInCurve: Curves.bounceIn,
+      switchOutCurve: Curves.bounceOut,
       duration: const Duration(milliseconds: 300),
       child: (_searchActive)
           ? Padding(
@@ -128,7 +122,12 @@ class _CustomListScreenState extends State<CustomListScreen> {
                     child: TextFormField(
                       controller: _searchController,
                       focusNode: _focusNode,
-                      onChanged: _updateSearch,
+                      onChanged: (value) {
+                        _updateSearch(value);
+                      },
+                      onFieldSubmitted: (value) {
+                        _updateSearch(value);
+                      },
                       decoration: const InputDecoration(hintText: 'Buscar...'),
                     ),
                   ),
@@ -151,25 +150,26 @@ class _CustomListScreenState extends State<CustomListScreen> {
                 ],
               ),
             )
-          : Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  icon: const Icon(Icons.arrow_back),
-                ),
-                IconButton(
-                  onPressed: () {
-                    setState(() {
-                      _searchActive = true;
-                    });
-                    _focusNode.requestFocus();
-                  },
-                  icon: const Icon(Icons.search),
-                ),
-              ],
+          : Container(
+              padding: const EdgeInsets.all(2),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      icon: const Icon(Icons.keyboard_arrow_left_outlined)),
+                  IconButton(
+                      onPressed: () {
+                        setState(() {
+                          _searchActive = !_searchActive;
+                        });
+                        _focusNode.requestFocus();
+                      },
+                      icon: const Icon(Icons.search)),
+                ],
+              ),
             ),
     );
   }

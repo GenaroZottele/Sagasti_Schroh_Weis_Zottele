@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Home Screen'),
+        title: const Text('PELICULAS Y SERIES'),//
         centerTitle: true,
         leadingWidth: 40,
         toolbarHeight: 80,

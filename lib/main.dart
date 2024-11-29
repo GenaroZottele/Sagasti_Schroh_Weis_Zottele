@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:flutter_application_base/screens/estrenos_list_item.dart';
 import 'package:flutter_application_base/screens/screens.dart';
 import 'package:flutter_application_base/themes/app_theme.dart';
 
@@ -32,6 +33,8 @@ class _MyAppState extends State<MyApp> {
       themeMode: Preferences.darkmode ? ThemeMode.dark : ThemeMode.light,
       routes: {
         'home': (context) => const HomeScreen(),
+        'estrenos_list_screen': (context) => const CustomListScreenEstrenos(),
+        'estrenos_list_item': (context) => const EstrenosListItem(),
         'custom_list': (context) => const CustomListScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'custom_list_item': (context) => const CustomListItem(),
