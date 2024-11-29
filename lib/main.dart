@@ -32,11 +32,9 @@ class _MyAppState extends State<MyApp> {
       themeMode: Preferences.darkmode ? ThemeMode.dark : ThemeMode.light,
       routes: {
         'home': (context) => const HomeScreen(),
-        'custom_list': (context) => const CustomListScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
-        'custom_list_item': (context) => const CustomListItem(),
-        'custom_list_reg': (context) => custom_list_reg(),
-        'details': (context) => custom_list_reg_detail(),
+        'actores': (context) =>  const ActoresListScreen(),
+        'details': (context) =>  const ActorDetailScreen(),
       },
     );
   }
