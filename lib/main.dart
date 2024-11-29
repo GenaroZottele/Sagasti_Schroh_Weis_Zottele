@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:flutter_application_base/screens/custom_list_movies_item.dart';
+import 'package:flutter_application_base/screens/custom_list_movies_screen.dart';
 import 'package:flutter_application_base/screens/screens.dart';
 import 'package:flutter_application_base/themes/app_theme.dart';
 
@@ -35,10 +37,10 @@ class _MyAppState extends State<MyApp> {
         'custom_list': (context) => const CustomListScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'custom_list_item': (context) => const CustomListItem(),
+        'custom_list_movies_screen': (context) =>
+            const CustomListMoviesScreen(),
+        'custom_list_movies_item': (context) => const MovieDetailsScreen(),
       },
     );
   }
 }
-
-
-
