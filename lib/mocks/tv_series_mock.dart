@@ -96,3 +96,4 @@ final List<Map<String, dynamic>> tvSeriesMock = [
     'favorite': true,
   },
 ];
+
