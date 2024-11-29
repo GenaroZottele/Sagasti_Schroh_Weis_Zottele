@@ -4,12 +4,14 @@ class DrawerMenu extends StatelessWidget {
   final List<Map<String, String>> _menuItems = <Map<String, String>>[
     {'route': 'home', 'title': 'Home', 'subtitle': 'Home + counter app'},
     {'route': 'estrenos_list_screen', 'title': 'Películas Estreno', 'subtitle': ''},
-    {'route': 'custom_list', 'title': 'Custom list', 'subtitle': ''},
     {'route': 'actores', 'title': 'Lista Actores', 'subtitle': ''},
     {'route': 'profile', 'title': 'Perfil usuario', 'subtitle': ''},
-    {'route': 'custom_list', 'title': 'Custom List', 'subtitle': ''},
-    {'route': 'profile', 'title': 'Perfil Usuario', 'subtitle': ''},
     {'route': 'record_list', 'title': 'Lista de Registros', 'subtitle': ''},
+    {
+      'route': 'custom_list_movies_screen',
+      'title': 'Películas',
+      'subtitle': 'Lista de películas'
+    },
   ];
 
   DrawerMenu({super.key});

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
+import 'package:flutter_application_base/screens/custom_list_movies_item.dart';
+import 'package:flutter_application_base/screens/custom_list_movies_screen.dart';
 import 'package:flutter_application_base/screens/estrenos_list_item.dart';
 import 'package:flutter_application_base/screens/screens.dart';
 import 'package:flutter_application_base/themes/app_theme.dart';
@@ -39,12 +41,8 @@ class _MyAppState extends State<MyApp> {
         'record_list': (context) => const RecordListScreen(),
         'record_details': (context) => const RecordDetailsScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
-        'actores': (context) =>  const ActoresListScreen(),
-        'details': (context) =>  const ActorDetailScreen(),
-      },
+        'custom_list_movies_screen': (context) => const CustomListMoviesScreen(),
+        'custom_list_movies_item': (context) => const MovieDetailsScreen(),},
     );
   }
 }
-
-
-

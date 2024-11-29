@@ -6,3 +6,5 @@ export 'package:flutter_application_base/screens/record_list_screen.dart';
 
 export 'package:flutter_application_base/screens/ActoresListScreen.dart';
 export 'package:flutter_application_base/screens/ActorDetailScreen.dart';
+export 'package:flutter_application_base/screens/custom_list_movies_screen.dart';
+export 'package:flutter_application_base/screens/custom_list_movies_item.dart';

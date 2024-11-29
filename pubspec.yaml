@@ -50,10 +50,10 @@ flutter:
   assets:
     - assets/loading.gif
     - assets/images/
-    - assets/avatars/
     - assets/posters_estrenos/    
     - assets/background.jpg
     - assets/actores/
+    - assets/movies/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
