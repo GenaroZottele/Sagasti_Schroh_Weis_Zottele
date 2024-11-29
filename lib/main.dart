@@ -38,6 +38,8 @@ class _MyAppState extends State<MyApp> {
         'custom_list': (context) => const CustomListScreen(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'custom_list_item': (context) => const CustomListItem(),
+        'record_list': (context) => const RecordListScreen(),
+        'record_details': (context) => const RecordDetailsScreen(),
       },
     );
   }
