@@ -7,22 +7,27 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context); // Obtiene el tema actual
+    final isDarkMode = theme.brightness == Brightness.dark;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'PELÍCULAS Y SERIES',
           style: TextStyle(
-            fontSize: 30,  // Fuente más grande
+            fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: Colors.yellow, // Color amarillo
-            letterSpacing: 2.0, // Aumento de espacio entre letras
-            fontFamily: 'Roboto',  // Fuente por defecto
+            color: isDarkMode ? const Color.fromARGB(255, 255, 255, 255) : const Color.fromARGB(255, 0, 0, 0),
+            letterSpacing: 2.0,
+            fontFamily: 'Roboto',
           ),
         ),
         centerTitle: true,
         leadingWidth: 40,
         toolbarHeight: 80,
-        backgroundColor: const Color.fromARGB(255, 61, 61, 61),
+        backgroundColor: isDarkMode
+            ? theme.colorScheme.primary.withOpacity(0.9)
+            : const Color.fromARGB(255, 43, 43, 43),
         elevation: 10,
       ),
       drawer: DrawerMenu(),
@@ -32,48 +37,49 @@ class HomeScreen extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/background.jpg'), // Imagen de fondo
+                image: const AssetImage('assets/background.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  const Color.fromARGB(255, 66, 12, 12).withOpacity(0.5), // Difuminado con opacidad
+                  isDarkMode
+                      ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.7)
+                      : const Color.fromARGB(255, 161, 161, 161).withOpacity(0.5),
                   BlendMode.darken,
                 ),
               ),
             ),
           ),
           // Contenido superpuesto al fondo
-          Center( // Usamos Center para centrar todo el contenido
+          Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center, // Centrado verticalmente
-              crossAxisAlignment: CrossAxisAlignment.center, // Centrado horizontalmente
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Icono decorativo
                 Icon(
                   Icons.movie,
                   size: 100,
-                  color: Colors.amberAccent,
+                  color: isDarkMode ? const Color.fromARGB(255, 255, 255, 255) : Colors.amberAccent,
                 ),
                 const SizedBox(height: 20),
-                // Texto principal con fuente y tamaño más grande
                 Text(
                   'BIENVENIDO',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 32,  // Fuente grande
+                    fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontFamily: 'OpenSans',  // Otra fuente predeterminada
+                    color: isDarkMode ? Colors.white : Colors.black,
+                    fontFamily: 'OpenSans',
                   ),
                 ),
                 const SizedBox(height: 10),
-                // Subtítulo con fuente más ligera
                 Text(
-                  'EXPLORA TUS ACTORES, PELÍCULAS Y SERIES FAVORITAS, SIN PERDERTE DE NINGÚN ESTRENO ',
+                  'EXPLORA TUS ACTORES, PELÍCULAS Y SERIES FAVORITAS, SIN PERDERTE DE NINGÚN ESTRENO',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
-                    color: const Color.fromRGBO(255, 255, 255, 0.702),
-                    fontFamily: 'Poppins', // Otra fuente predeterminada
+                    color: isDarkMode
+                        ? Colors.white.withOpacity(0.7)
+                        : const Color.fromRGBO(255, 255, 255, 0.702),
+                    fontFamily: 'Poppins',
                   ),
                 ),
                 const SizedBox(height: 30),
