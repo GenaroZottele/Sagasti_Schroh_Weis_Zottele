@@ -5,7 +5,7 @@ class DrawerMenu extends StatelessWidget {
     {'route': 'home', 'title': 'Home', 'subtitle': 'Home + counter app'},
     {'route': 'estrenos_list_screen', 'title': 'Películas Estreno', 'subtitle': ''}, //Weis
     {'route': 'actores', 'title': 'Lista Actores', 'subtitle': ''},   //Sagasti
-    {'route': 'record_list', 'title': 'Lista de Registros', 'subtitle': ''},  //Zottele
+    {'route': 'record_list', 'title': 'Lista de Series TV', 'subtitle': ''},  //Zottele
     {'route': 'custom_list_movies_screen','title': 'Películas','subtitle': 'Lista de películas'}, //Schroh
     {'route': 'profile', 'title': 'Perfil usuario', 'subtitle': ''},
   ];
