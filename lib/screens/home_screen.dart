@@ -17,7 +17,9 @@ class HomeScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 30,
             fontWeight: FontWeight.bold,
-            color: isDarkMode ? const Color.fromARGB(255, 255, 255, 255) : const Color.fromARGB(255, 0, 0, 0),
+            color: isDarkMode 
+                ? Colors.white // Letras blancas en dark mode
+                : Colors.black, // Letras negras en light mode
             letterSpacing: 2.0,
             fontFamily: 'Roboto',
           ),
@@ -25,29 +27,30 @@ class HomeScreen extends StatelessWidget {
         centerTitle: true,
         leadingWidth: 40,
         toolbarHeight: 80,
-        backgroundColor: isDarkMode
-            ? theme.colorScheme.primary.withOpacity(0.9)
-            : const Color.fromARGB(255, 43, 43, 43),
+        backgroundColor: isDarkMode 
+            ? Colors.black // Header negro en dark mode
+            : Colors.white, // Header blanco en light mode
         elevation: 10,
       ),
       drawer: DrawerMenu(),
       body: Stack(
         children: [
+          // Fondo con difuminado
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: const AssetImage('assets/background.jpg'),
                 fit: BoxFit.cover,
                 colorFilter: ColorFilter.mode(
-                  isDarkMode
-                      ? const Color.fromARGB(255, 255, 255, 255).withOpacity(0.7)
-                      : const Color.fromARGB(255, 161, 161, 161).withOpacity(0.5),
+                  isDarkMode 
+                      ? Colors.black.withOpacity(0.5) // Difuminado oscuro en dark mode
+                      : Colors.white.withOpacity(0.9), // Difuminado claro en light mode
                   BlendMode.darken,
                 ),
               ),
             ),
           ),
-          
+          // Contenido
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -56,7 +59,9 @@ class HomeScreen extends StatelessWidget {
                 Icon(
                   Icons.movie,
                   size: 100,
-                  color: isDarkMode ? const Color.fromARGB(255, 255, 255, 255) : Colors.amberAccent,
+                  color: isDarkMode 
+                      ? Colors.amber // Icono amarillo en dark mode
+                      : Colors.white, // Icono blanco en light mode
                 ),
                 const SizedBox(height: 20),
                 Text(
@@ -65,7 +70,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: isDarkMode ? Colors.white : Colors.black,
+                    color: Colors.white, // Letras blancas en ambos modos
                     fontFamily: 'OpenSans',
                   ),
                 ),
@@ -75,9 +80,7 @@ class HomeScreen extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 18,
-                    color: isDarkMode
-                        ? Colors.white.withOpacity(0.7)
-                        : const Color.fromRGBO(255, 255, 255, 0.702),
+                    color: Colors.white.withOpacity(0.7), // Letras blancas semi-transparentes
                     fontFamily: 'Poppins',
                   ),
                 ),

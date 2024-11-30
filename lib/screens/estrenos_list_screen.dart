@@ -11,31 +11,33 @@ class CustomListScreenEstrenos extends StatefulWidget {
 }
 
 class _CustomListScreenState extends State<CustomListScreenEstrenos> {
-  List _auxiliarElements = [];
-  String _searchQuery = '';
-  bool _searchActive = false;
+  List _auxiliarElements = []; // lista para filtrar resultados
+  String _searchQuery = ''; // texto de busqueda
+  bool _searchActive = false; // estado de la barra de busqueda
 
   final TextEditingController _searchController = TextEditingController();
-  final FocusNode _focusNode = FocusNode();
+  final FocusNode _focusNode = FocusNode(); // para manejar el foco en la barra de busqueda
 
   @override
   void initState() {
     super.initState();
-    _auxiliarElements = peliculasEstrenos;
+    _auxiliarElements = peliculasEstrenos; // inicializa la lista con todos los estrenos
   }
 
   @override
   void dispose() {
+    // limpia los controladores al cerrar la pantalla
     _searchController.dispose();
     _focusNode.dispose();
     super.dispose();
   }
 
   void _updateSearch(String? query) {
+    // filtra los elementos segun lo que escribis en la busqueda
     setState(() {
       _searchQuery = query ?? '';
       if (_searchQuery.isEmpty) {
-        _auxiliarElements = peliculasEstrenos;  
+        _auxiliarElements = peliculasEstrenos;
       } else {
         _auxiliarElements = peliculasEstrenos.where((element) {
           return element[1].toLowerCase().contains(_searchQuery.toLowerCase());
@@ -51,61 +53,67 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
       child: Scaffold(
         body: Column(
           children: [
-            searchArea(),
-            listItemsArea(),
+            searchArea(), // barra de busqueda arriba
+            listItemsArea(), // lista de estrenos abajo
           ],
         ),
       ),
     );
   }
 
- Expanded listItemsArea() {
-  return Expanded(
-    child: ListView.builder(
-      physics: const BouncingScrollPhysics(),
-      itemCount: _auxiliarElements.length,
-      itemBuilder: (BuildContext context, int index) {
-        final movie = _auxiliarElements[index];
+  Expanded listItemsArea() {
+    // lista de elementos que muestra las peliculas
+    return Expanded(
+      child: ListView.builder(
+        physics: const BouncingScrollPhysics(),
+        itemCount: _auxiliarElements.length,
+        itemBuilder: (BuildContext context, int index) {
+          final movie = _auxiliarElements[index]; // info de cada pelicula
 
-        return GestureDetector(
-          onTap: () async {
-            final updatedData = await Navigator.pushNamed(
-              context,
-              'estrenos_list_item',
-              arguments: {
-                'poster': movie[0],
-                'title': movie[1],
-                'category': movie[2],
-                'rating': movie[3], 
-                'favorite': movie[4],
-              },
-            );
+          return GestureDetector(
+            onTap: () async {
+              // navega a los detalles y espera los cambios
+              final updatedData = await Navigator.pushNamed(
+                context,
+                'estrenos_list_item',
+                arguments: {
+                  'poster': movie[0],
+                  'title': movie[1],
+                  'category': movie[2],
+                  'rating': movie[3],
+                  'favorite': movie[4],
+                },
+              );
 
-            
-            if (updatedData != null) {
-              setState(() {
-                _auxiliarElements[index][4] = updatedData; 
-              });
-            }
-          },
-          child: MovieCard(
-            poster: movie[0],
-            title: movie[1],
-            category: movie[2],
-            rating: movie[3], 
-            isFavorite: movie[4],
-            onFavoriteToggle: () {
-              setState(() {
-                _auxiliarElements[index][4] = !_auxiliarElements[index][4];
-              });
+              // actualiza la lista si cambiaste el estado de favorito
+              if (updatedData != null) {
+                setState(() {
+                  _auxiliarElements[index][4] = updatedData;
+                });
+              }
             },
-          ),
-        );
-      },
-    ),
-  );
-}
+            child: MovieCard(
+              // tarjeta para mostrar cada pelicula
+              poster: movie[0],
+              title: movie[1],
+              category: movie[2],
+              rating: movie[3],
+              isFavorite: movie[4],
+              onFavoriteToggle: () {
+                setState(() {
+                  // cambia el estado de favorito directo desde la tarjeta
+                  _auxiliarElements[index][4] = !_auxiliarElements[index][4];
+                });
+              },
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   AnimatedSwitcher searchArea() {
+    // area que cambia entre barra de busqueda o botones
     return AnimatedSwitcher(
       switchInCurve: Curves.bounceIn,
       switchOutCurve: Curves.bounceOut,
@@ -120,16 +128,17 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
                       controller: _searchController,
                       focusNode: _focusNode,
                       onChanged: (value) {
-                        _updateSearch(value);
+                        _updateSearch(value); // busca mientras escribis
                       },
                       onFieldSubmitted: (value) {
-                        _updateSearch(value);
+                        _updateSearch(value); // busca al presionar enter
                       },
                       decoration: const InputDecoration(hintText: 'Buscar...'),
                     ),
                   ),
                   IconButton(
                     onPressed: () {
+                      // limpia el texto de busqueda
                       _searchController.clear();
                       FocusManager.instance.primaryFocus?.unfocus();
                       _updateSearch('');
@@ -138,6 +147,7 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
                   ),
                   IconButton(
                     onPressed: () {
+                      // cierra la barra de busqueda
                       setState(() {
                         _searchActive = false;
                       });
@@ -153,18 +163,20 @@ class _CustomListScreenState extends State<CustomListScreenEstrenos> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   IconButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      icon: const Icon(Icons.keyboard_arrow_left_outlined)),
+                    onPressed: () {
+                      Navigator.pop(context); // vuelve a la pantalla anterior
+                    },
+                    icon: const Icon(Icons.keyboard_arrow_left_outlined),
+                  ),
                   IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _searchActive = !_searchActive;
-                        });
-                        _focusNode.requestFocus();
-                      },
-                      icon: const Icon(Icons.search)),
+                    onPressed: () {
+                      setState(() {
+                        _searchActive = !_searchActive; // activa la barra de busqueda
+                      });
+                      _focusNode.requestFocus();
+                    },
+                    icon: const Icon(Icons.search),
+                  ),
                 ],
               ),
             ),
