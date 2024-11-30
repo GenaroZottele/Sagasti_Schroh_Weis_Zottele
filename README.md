@@ -3,10 +3,10 @@
 ## Descripcion
 Este proyecto es una aplicación Flutter que centraliza información sobre entretenimiento. Permite gestionar y visualizar datos de:
 
-- Actores destacados.
-- Películas próximas a estrenar en el cine.
-- Catálogo general de películas.
-- Series de televisión.
+- Actores destacados. Gason Sagasti
+- Películas próximas a estrenar en el cine. Genaro Weis
+- Catálogo general de películas. Santiago Schroh
+- Series de televisión. Genaro Zottele
 
 Cada módulo cuenta con su propia funcionalidad específica, como listas de registros, detalles individuales y opciones para interactuar (marcar como favoritos, editar descripciones, etc.).
 
