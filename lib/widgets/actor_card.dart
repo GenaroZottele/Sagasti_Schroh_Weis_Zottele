@@ -17,15 +17,19 @@ class ActorCard extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage(actor['image'] ?? 'assets/images/default.jpg'),
+          backgroundImage: actor['profile_path'] != null && actor['profile_path'].startsWith('http')
+              ? NetworkImage(actor['profile_path']) // 🔹 Imagen desde API
+              : AssetImage('assets/actores/default.jpg') as ImageProvider, // 🔹 Imagen local
           radius: 50,
         ),
         title: Text(actor['name'] ?? 'Sin Nombre'),
-        subtitle: Text('${actor['category']}, ${actor['experience']} años'),
+        subtitle: Text(
+          '${actor['category']}, Popularidad: ${actor['popularity']}',
+        ),
         trailing: IconButton(
           icon: Icon(
-            actor['isFavorite'] ? Icons.star : Icons.star_border,
-            color: actor['isFavorite'] ? Colors.amber : null,
+            (actor['isFavorite'] ?? false) ? Icons.star : Icons.star_border,
+            color: (actor['isFavorite'] ?? false) ? Colors.amber : null,
           ),
           onPressed: onFavoriteToggle,
         ),

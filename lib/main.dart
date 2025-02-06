@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_base/helpers/preferences.dart';
-import 'package:flutter_application_base/screens/custom_list_movies_item.dart';
-import 'package:flutter_application_base/screens/custom_list_movies_screen.dart';
-import 'package:flutter_application_base/screens/estrenos_list_item.dart';
+import 'package:flutter_application_base/helpers/actor_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_application_base/screens/screens.dart';
 import 'package:flutter_application_base/themes/app_theme.dart';
 
@@ -10,7 +9,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Preferences.initShared();
 
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ActorProvider()), 
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -39,13 +45,12 @@ class _MyAppState extends State<MyApp> {
         'estrenos_list_item': (context) => const EstrenosListItem(),
         'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'actores': (context) => const ActoresListScreen(),
-        'details': (context) => const ActorDetailScreen(),
+        'details': (context) => ActorDetailScreen(),
         'record_list': (context) => const RecordListScreen(),
         'record_details': (context) => const RecordDetailsScreen(),
-        'profile': (context) => ProfileScreen(onThemeChanged: _updateTheme),
         'custom_list_movies_screen': (context) => const CustomListMoviesScreen(),
         'custom_list_movies_item': (context) => const MovieDetailsScreen(),
-        },
+      },
     );
   }
 }

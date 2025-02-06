@@ -1,48 +1,62 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_base/mocks/ActoresMock.dart';
-import 'package:flutter_application_base/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_application_base/helpers/actor_provider.dart';
+import 'package:flutter_application_base/widgets/actor_card.dart';
 
-class ActoresListScreen extends StatefulWidget {
-  const ActoresListScreen({Key? key}) : super(key: key);
-
-  @override
-  State<ActoresListScreen> createState() => _ActoresListScreenState();
-}
-
-class _ActoresListScreenState extends State<ActoresListScreen> {
-  List<Map<String, dynamic>> actors = ActoresMock.actors;
+class ActoresListScreen extends StatelessWidget {
+  const ActoresListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final actorProvider = Provider.of<ActorProvider>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de Actores'),
       ),
-      body: ListView.builder(
-        itemCount: actors.length,
-        itemBuilder: (context, index) {
-          final actor = actors[index];
-          return ActorCard(
-            actor: actor,
-            onTap: () async {
-              final updatedActor = await Navigator.pushNamed(
-                context,
-                'details',
-                arguments: actor,
-              );
+      body: FutureBuilder(
+        future: actorProvider.cargarActores(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return const Center(child: Text('Error al cargar actores'));
+          } else {
+            return Consumer<ActorProvider>(
+              builder: (context, provider, child) {
+                return ListView.builder(
+                  itemCount: provider.actores.length,
+                  itemBuilder: (context, index) {
+                    final actor = provider.actores[index];
 
-              if (updatedActor != null) {
-                setState(() {
-                  actors[index] = updatedActor as Map<String, dynamic>;
-                });
-              }
-            },
-            onFavoriteToggle: () {
-              setState(() {
-                actor['isFavorite'] = !actor['isFavorite'];
-              });
-            },
-          );
+                    return ActorCard(
+                      actor: actor,
+                      onTap: () async {
+                        final updatedActor = await Navigator.pushNamed(
+                          context,
+                          'details',
+                          arguments: {
+                            ...actor,
+                            'profile_path': actor['profile_path'] ?? 'https://via.placeholder.com/150',
+                            'category': actor['category'] ?? 'Desconocido',
+                            'popularity': actor['popularity'] ?? 'Desconocida',
+                            'movies': actor['movies'] ?? [],
+                          },
+                        ) as Map<String, dynamic>?;
+
+                        if (updatedActor != null) {
+                          provider.updateActor(index, updatedActor);
+                        }
+                      },
+                      onFavoriteToggle: () {
+                        provider.toggleFavorite(index);
+                      },
+                    );
+                  },
+                );
+              },
+            );
+          }
         },
       ),
     );
