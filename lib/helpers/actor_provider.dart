@@ -18,10 +18,10 @@ class ActorProvider with ChangeNotifier {
         final data = jsonDecode(response.body);
         _actores = (data["results"] as List).map((actor) {
           final movies = actor['known_for'] != null
-              ? (actor['known_for'] as List)
-                  .map((movie) => movie['original_title'] ?? 'Título Desconocido')
-                  .toList()
-              : ['Sin información']; // 🔹 Evita null en movies
+              ? (actor['known_for'] as List).map((movie) {
+                  return movie['title'] ?? movie['original_title'] ?? movie['original_name'] ?? 'Título no disponible';
+                }).toList()
+              : ['Sin información'];
 
           return {
             'id': actor['id'] ?? 0,
